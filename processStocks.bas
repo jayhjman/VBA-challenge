@@ -64,7 +64,7 @@ Sub processStocks():
             currentSymbol = ws.Cells(i, tickerCol).Value
             nextSymbol = ws.Cells(i + 1, tickerCol).Value
             
-            ' Keep a rolling total of current sybmols volume
+            ' Keep a rolling total of current stock sybmols volume
             totalStockVolume = totalStockVolume + ws.Cells(i, stockVolumeCol).Value
             
             ' Detect the stock symbol change
@@ -73,9 +73,8 @@ Sub processStocks():
                 ' Grab the closing price on last day
                 lastClosePrice = ws.Cells(i, closeCol).Value
                 
-                
+                ' Calculate the change
                 yearlyChange = lastClosePrice - firstOpenPrice
-                
                 percentChange = (lastClosePrice / firstOpenPrice) - 1#
                 
                 ' Write summary cells
@@ -102,6 +101,43 @@ Sub processStocks():
             
         Next i
         
+        Call processGreatestSummary(ws, firstRow, percentChangeCol, totalStockVolumeCol)
+        
     Next ws
     
 End Sub
+
+Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol As Long, _
+    volumeCol As Long):
+    
+    Dim lastRow As Long
+    
+    Dim labelCol As Long: labelCol = 15
+    Dim tickerCol As Long: tickerCol = 16
+    Dim valueCol As Long: valueCol = 17
+    
+    Dim greatestIncreaseRow As Long
+    Dim greatestIncrease As Double
+    
+    ws.Cells(startRow - 1, tickerCol).Value = "Ticker"
+    ws.Cells(startRow - 1, valueCol).Value = "Value"
+    
+    ws.Cells(startRow, labelCol).Value = "Greatest % Increase"
+    ws.Cells(startRow + 1, labelCol).Value = "Greatest % Decrease"
+    ws.Cells(startRow + 2, labelCol).Value = "Greatest Total Volume"
+    
+    lastRow = ws.Cells(Rows.Count, percentCol).End(xlUp).Row
+    
+    greatestIncrease = 0
+    greatestIncreaseRow = startRow
+    For i = startRow To lastRow
+        If (ws.Cells(i, percentCol).Value > greatestIncrease) Then
+            greatestIncreaseRow = i
+            greatestIncrease = ws.Cells(i, percentCol).Value
+        End If
+    Next i
+    
+    MsgBox (greatestIncreaseRow)
+        
+End Sub
+
