@@ -16,6 +16,12 @@ Sub processStocks():
     Dim firstOpen As Boolean: firstOpen = True
     Dim firstOpenPrice As Double
     
+    Dim closeCol As Long: closeCol = 6
+    Dim lastClosePrice As Double
+    
+    Dim yearlyChange As Double
+    
+    
     ' Loop through each of the worksheets
     For Each ws In Sheets
           
@@ -30,6 +36,7 @@ Sub processStocks():
         ' Loop through each of the rows processing them
         For i = firstRow To lastRow
         
+            ' Grab the opening price on first day
             If firstOpen Then
                 firstOpenPrice = ws.Cells(i, openCol).Value
                 firstOpen = False
@@ -41,10 +48,22 @@ Sub processStocks():
             
             ' Detect the stock symbol change
             If (currentSymbol <> nextSymbol) Then
+            
+                ' Grab the closing price on last day
+                lastClosePrice = ws.Cells(i, closeCol).Value
+                
+                
+                yearlyChange = lastClosePrice - firstOpenPrice
+                
+                ' Print Results
                 MsgBox ("Current Symbol: " & currentSymbol & _
                     ", Next Symbol: " & nextSymbol)
-                MsgBox ("First Open Price: " & firstOpenPrice)
+                MsgBox ("First Open Price: " & firstOpenPrice & _
+                    ", lastClosePrice: " & lastClosePrice)
+                MsgBox ("yearlyChange : " & yearlyChange)
+                ' Processing new symbol reset firstOpen flag
                 firstOpen = True
+                
             End If
             
         Next i
