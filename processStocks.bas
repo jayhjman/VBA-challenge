@@ -75,7 +75,10 @@ Sub processStocks():
                 
                 ' Calculate the change
                 yearlyChange = lastClosePrice - firstOpenPrice
-                percentChange = (lastClosePrice / firstOpenPrice) - 1#
+                percentChange = 0
+                If (firstOpenPrice > 0) Then
+                    percentChange = (lastClosePrice / firstOpenPrice) - 1#
+                End If
                 
                 ' Write summary cells
                 ws.Cells(summaryStartRow, symbolCol).Value = currentSymbol
