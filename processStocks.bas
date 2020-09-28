@@ -122,6 +122,10 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol
     Dim greatestDecreaseRow As Long
     Dim greatestDecrease As Double
     
+    Dim greatestVolumeRow As Long
+    Dim greatestVolume As Double
+    
+    ' Setup the headers for the greatest summary table
     ws.Cells(startRow - 1, tickerCol).Value = "Ticker"
     ws.Cells(startRow - 1, valueCol).Value = "Value"
     
@@ -129,26 +133,44 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol
     ws.Cells(startRow + 1, labelCol).Value = "Greatest % Decrease"
     ws.Cells(startRow + 2, labelCol).Value = "Greatest Total Volume"
     
+    ' Percent columns row count exact same as volume so we can levarage this for both
     lastRow = ws.Cells(Rows.Count, percentCol).End(xlUp).Row
     
+    ' Initialize the variables
     greatestIncrease = ws.Cells(startRow, percentCol).Value
     greatestIncreaseRow = startRow
     
     greatestDecrease = ws.Cells(startRow, percentCol).Value
     greatestDecreaseRow = startRow
     
+    greatestVolume = ws.Cells(startRow, volumeCol).Value
+    greatestVolumeRow = startRow
+    
+    ' Loop finding greatest and least values
     For i = startRow To lastRow
+        ' Greatest percent
+        percentVal = ws.Cells(i, percentCol).Value
         If (ws.Cells(i, percentCol).Value > greatestIncrease) Then
             greatestIncreaseRow = i
             greatestIncrease = ws.Cells(i, percentCol).Value
         End If
+        ' Least percent
         If (ws.Cells(i, percentCol).Value < greatestDecrease) Then
             greatestDecreaseRow = i
             greatestDecrease = ws.Cells(i, percentCol).Value
         End If
+        ' Greatest volume
+        If (ws.Cells(i, volumeCol).Value > greatestVolume) Then
+            greatestVolumeRow = i
+            greatestVolume = ws.Cells(i, volumeCol).Value
+        End If
     Next i
     
-    MsgBox (greatestIncreaseRow)
-    MsgBox (greatestDecreaseRow)
+    ' Print results
+    MsgBox ("p > row " & greatestIncreaseRow)
+    MsgBox ("p < row " & greatestDecreaseRow)
+    MsgBox ("v > row " & greatestVolumeRow)
+
+    
 End Sub
 
