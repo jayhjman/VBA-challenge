@@ -119,6 +119,9 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol
     Dim greatestIncreaseRow As Long
     Dim greatestIncrease As Double
     
+    Dim greatestDecreaseRow As Long
+    Dim greatestDecrease As Double
+    
     ws.Cells(startRow - 1, tickerCol).Value = "Ticker"
     ws.Cells(startRow - 1, valueCol).Value = "Value"
     
@@ -128,16 +131,24 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol
     
     lastRow = ws.Cells(Rows.Count, percentCol).End(xlUp).Row
     
-    greatestIncrease = 0
+    greatestIncrease = ws.Cells(startRow, percentCol).Value
     greatestIncreaseRow = startRow
+    
+    greatestDecrease = ws.Cells(startRow, percentCol).Value
+    greatestDecreaseRow = startRow
+    
     For i = startRow To lastRow
         If (ws.Cells(i, percentCol).Value > greatestIncrease) Then
             greatestIncreaseRow = i
             greatestIncrease = ws.Cells(i, percentCol).Value
         End If
+        If (ws.Cells(i, percentCol).Value < greatestDecrease) Then
+            greatestDecreaseRow = i
+            greatestDecrease = ws.Cells(i, percentCol).Value
+        End If
     Next i
     
     MsgBox (greatestIncreaseRow)
-        
+    MsgBox (greatestDecreaseRow)
 End Sub
 
