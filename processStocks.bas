@@ -12,30 +12,42 @@ Sub processStocks():
     Dim currentSymbol As String
     Dim nextSymbol As String
     
+    Dim openCol As Long: openCol = 3
+    Dim firstOpen As Boolean: firstOpen = True
+    Dim firstOpenPrice As Double
     
-    'loop through each of the worksheets
+    ' Loop through each of the worksheets
     For Each ws In Sheets
           
-        'Get the last row in the worksheet
+        ' Get the last row in the worksheet
         lastRow = ws.Cells(Rows.Count, tickerCol).End(xlUp).Row
+                
+        ' Initialize symbols
+        currentSymbol = ""
+        nextSymbol = ""
         
-        'loop through each of the rows processing them
+        
+        ' Loop through each of the rows processing them
         For i = firstRow To lastRow
         
-            'Grab current and next stock symbol from sheet
+            If firstOpen Then
+                firstOpenPrice = ws.Cells(i, openCol).Value
+                firstOpen = False
+            End If
+        
+            ' Grab current and next stock symbol from sheet
             currentSymbol = ws.Cells(i, tickerCol).Value
             nextSymbol = ws.Cells(i + 1, tickerCol).Value
             
-            'detect the stock symbol change
+            ' Detect the stock symbol change
             If (currentSymbol <> nextSymbol) Then
                 MsgBox ("Current Symbol: " & currentSymbol & _
                     ", Next Symbol: " & nextSymbol)
+                MsgBox ("First Open Price: " & firstOpenPrice)
+                firstOpen = True
             End If
             
         Next i
-        
-        currentSymbol = ""
-        nextSymbol = ""
         
     Next ws
     
