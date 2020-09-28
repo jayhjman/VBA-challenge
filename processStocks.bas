@@ -22,6 +22,9 @@ Sub processStocks():
     Dim yearlyChange As Double
     Dim percentChange As Double
     
+    Dim stockVolumeCol As Long: stockVolumeCol = 7
+    Dim totalStockVolume As Double
+    
     
     ' Loop through each of the worksheets
     For Each ws In Sheets
@@ -29,10 +32,10 @@ Sub processStocks():
         ' Get the last row in the worksheet
         lastRow = ws.Cells(Rows.Count, tickerCol).End(xlUp).Row
                 
-        ' Initialize symbols
+        ' Initialize variables
         currentSymbol = ""
         nextSymbol = ""
-        
+        totalStockVolume = 0
         
         ' Loop through each of the rows processing them
         For i = firstRow To lastRow
@@ -46,6 +49,9 @@ Sub processStocks():
             ' Grab current and next stock symbol from sheet
             currentSymbol = ws.Cells(i, tickerCol).Value
             nextSymbol = ws.Cells(i + 1, tickerCol).Value
+            
+            ' Keep a rolling total of current sybmols volume
+            totalStockVolume = totalStockVolume + ws.Cells(i, stockVolumeCol).Value
             
             ' Detect the stock symbol change
             If (currentSymbol <> nextSymbol) Then
@@ -66,8 +72,13 @@ Sub processStocks():
                     ", lastClosePrice: " & lastClosePrice)
                 MsgBox ("yearlyChange : " & yearlyChange & _
                     ", percentChange: " & percentChange)
+                MsgBox ("TotalStockVolume: " & totalStockVolume)
+                    
                 ' Processing new symbol reset firstOpen flag
                 firstOpen = True
+                
+                ' Reset Total stock volume for next stock symbol
+                totalStockVolume = 0
                 
             End If
             
