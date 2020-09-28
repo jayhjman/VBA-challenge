@@ -20,6 +20,7 @@ Sub processStocks():
     Dim lastClosePrice As Double
     
     Dim yearlyChange As Double
+    Dim percentChange As Double
     
     
     ' Loop through each of the worksheets
@@ -55,12 +56,16 @@ Sub processStocks():
                 
                 yearlyChange = lastClosePrice - firstOpenPrice
                 
+                percentChange = (lastClosePrice / firstOpenPrice) - 1#
+                
+                
                 ' Print Results
                 MsgBox ("Current Symbol: " & currentSymbol & _
                     ", Next Symbol: " & nextSymbol)
                 MsgBox ("First Open Price: " & firstOpenPrice & _
                     ", lastClosePrice: " & lastClosePrice)
-                MsgBox ("yearlyChange : " & yearlyChange)
+                MsgBox ("yearlyChange : " & yearlyChange & _
+                    ", percentChange: " & percentChange)
                 ' Processing new symbol reset firstOpen flag
                 firstOpen = True
                 
