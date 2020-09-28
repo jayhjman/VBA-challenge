@@ -25,6 +25,12 @@ Sub processStocks():
     Dim stockVolumeCol As Long: stockVolumeCol = 7
     Dim totalStockVolume As Double
     
+    Dim summaryStartRow As Long: summaryStartRow = firstRow
+    Dim symbolCol As Long: symbolCol = 9
+    Dim yearlyChangeCol As Long: yearlyChangeCol = 10
+    Dim percentChangeCol As Long: percentChangeCol = 11
+    Dim totalStockVolumeCol As Long: totalStockVolumeCol = 12
+    
     
     ' Loop through each of the worksheets
     For Each ws In Sheets
@@ -36,6 +42,14 @@ Sub processStocks():
         currentSymbol = ""
         nextSymbol = ""
         totalStockVolume = 0
+        
+        ' Summary Table Column headers
+        summaryStartRow = firstRow
+        ws.Cells(summaryStartRow - 1, symbolCol).Value = "Ticker"
+        ws.Cells(summaryStartRow - 1, yearlyChangeCol).Value = "Yearly Change"
+        ws.Cells(summaryStartRow - 1, percentChangeCol).Value = "Percent Change"
+        ws.Cells(summaryStartRow - 1, totalStockVolumeCol).Value = "Total Stock Volume"
+        
         
         ' Loop through each of the rows processing them
         For i = firstRow To lastRow
@@ -64,20 +78,24 @@ Sub processStocks():
                 
                 percentChange = (lastClosePrice / firstOpenPrice) - 1#
                 
+                ' Write summary cells
+                ws.Cells(summaryStartRow, symbolCol).Value = currentSymbol
+                ws.Cells(summaryStartRow, yearlyChangeCol).Value = yearlyChange
+                ws.Cells(summaryStartRow, yearlyChangeCol).Interior.Color = vbGreen
+                If yearlyChange < 0 Then
+                    ws.Cells(summaryStartRow, yearlyChangeCol).Interior.Color = vbRed
+                End If
+                ws.Cells(summaryStartRow, percentChangeCol).Value = percentChange
+                ws.Cells(summaryStartRow, percentChangeCol).NumberFormat = "0.00%"
+                ws.Cells(summaryStartRow, totalStockVolumeCol).Value = totalStockVolume
                 
-                ' Print Results
-                MsgBox ("Current Symbol: " & currentSymbol & _
-                    ", Next Symbol: " & nextSymbol)
-                MsgBox ("First Open Price: " & firstOpenPrice & _
-                    ", lastClosePrice: " & lastClosePrice)
-                MsgBox ("yearlyChange : " & yearlyChange & _
-                    ", percentChange: " & percentChange)
-                MsgBox ("TotalStockVolume: " & totalStockVolume)
-                    
+                ' Change to the next row for the summary table
+                summaryStartRow = summaryStartRow + 1
+                
                 ' Processing new symbol reset firstOpen flag
                 firstOpen = True
                 
-                ' Reset Total stock volume for next stock symbol
+                ' Reset total stock volume for next stock symbol
                 totalStockVolume = 0
                 
             End If
