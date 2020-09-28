@@ -1,6 +1,8 @@
 Attribute VB_Name = "Module1"
 Sub processStocks():
 
+    ' Clear the change and greatest summary sections
+    Call clearChangeAndGreatest
 
     Dim ws As Worksheet
     
@@ -183,5 +185,17 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, symbolCol 
     ws.Cells(startRow + 2, tickerCol).Value = ws.Cells(greatestVolumeRow, symbolCol).Value
     ws.Cells(startRow + 2, valueCol).Value = ws.Cells(greatestVolumeRow, volumeCol).Value
 
+End Sub
+
+Private Sub clearChangeAndGreatest():
+
+    Dim ws As Worksheet
+        
+    ' Loop through the sheets clearing change and greatest section
+    For Each ws In Sheets
+       ws.Range("I:L").Clear
+       ws.Range("O:Q").Clear
+    Next ws
+    
 End Sub
 
