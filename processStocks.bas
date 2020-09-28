@@ -101,13 +101,13 @@ Sub processStocks():
             
         Next i
         
-        Call processGreatestSummary(ws, firstRow, percentChangeCol, totalStockVolumeCol)
+        Call processGreatestSummary(ws, firstRow, symbolCol, percentChangeCol, totalStockVolumeCol)
         
     Next ws
     
 End Sub
 
-Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol As Long, _
+Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, symbolCol As Long, percentCol As Long, _
     volumeCol As Long):
     
     Dim lastRow As Long
@@ -165,12 +165,20 @@ Private Sub processGreatestSummary(ws As Worksheet, startRow As Long, percentCol
             greatestVolume = ws.Cells(i, volumeCol).Value
         End If
     Next i
+        
+    ' Write greatest percent increase
+    ws.Cells(startRow, tickerCol).Value = ws.Cells(greatestIncreaseRow, symbolCol).Value
+    ws.Cells(startRow, valueCol).Value = ws.Cells(greatestIncreaseRow, percentCol).Value
+    ws.Cells(startRow, valueCol).NumberFormat = "0.00%"
     
-    ' Print results
-    MsgBox ("p > row " & greatestIncreaseRow)
-    MsgBox ("p < row " & greatestDecreaseRow)
-    MsgBox ("v > row " & greatestVolumeRow)
+    ' Write greatest percent decrease
+    ws.Cells(startRow + 1, tickerCol).Value = ws.Cells(greatestDecreaseRow, symbolCol).Value
+    ws.Cells(startRow + 1, valueCol).Value = ws.Cells(greatestDecreaseRow, percentCol).Value
+    ws.Cells(startRow + 1, valueCol).NumberFormat = "0.00%"
+    
+    ' Write greatest volume
+    ws.Cells(startRow + 2, tickerCol).Value = ws.Cells(greatestVolumeRow, symbolCol).Value
+    ws.Cells(startRow + 2, valueCol).Value = ws.Cells(greatestVolumeRow, volumeCol).Value
 
-    
 End Sub
 
