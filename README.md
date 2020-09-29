@@ -58,4 +58,4 @@ This is an example of how to cycle through each worksheet in an Excel file using
 
 ## Author
 
-Made by Jay with :heart:
+Made by Jay with :heart: in 2020.
