@@ -45,7 +45,7 @@ This is an example of how to cycle through each worksheet in an Excel file using
   
 4. Click on the "Visual Basic" icon  
 
-5. Download the [Visual Basic Module](processStocks.bas) (you will need to use "curl" to download the raw version from github)
+5. Download the [Visual Basic Module](processStocks.bas) (you will need to use "curl" to download the raw version from github or alternatively "clone" this entire repository and get the files from there)
 
 6. In the VBA Project panel right click and choose "Import File", select the downloaded file from step 5 above
 
