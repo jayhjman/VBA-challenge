@@ -39,18 +39,19 @@ This is an example of how to cycle through each worksheet in an Excel file using
 
 1. Download the [Original Stock Data](Resources/originals/Multiple_year_stock_data.xlsx) 
 
-2. Open the downloaded file in Excel (be sure to enable macros when you open the file)
+2. Open the downloaded file in Excel (be sure to enable editing and macros when you open the file)
 
 3. Click on the "Developer" tab (assuming you have "Developer" tab enabled)
   
 4. Click on the "Visual Basic" icon  
 
-5. Download the [Visual Basic Module](processStocks.bas)
+5. Download the [Visual Basic Module](processStocks.bas) (you will need to use "curl" to download the raw version from github)
 
-6. In the VBA Project panel right click and choose "Import File", select the downlaoded file from step 5 above
+6. In the VBA Project panel right click and choose "Import File", select the downloaded file from step 5 above
 
 7. You should see "Module1" imported now
 
 8. Click the run button and if prompted choose the "processStocks" macro
 
 9. Don't worry about executing more than once, the macro clears the previously added results before executing again
+
