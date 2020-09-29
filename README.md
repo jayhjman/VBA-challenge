@@ -55,3 +55,7 @@ This is an example of how to cycle through each worksheet in an Excel file using
 
 9. Don't worry about executing more than once, the macro clears the previously added results before executing again
 
+
+## Author
+
+Made by Jay with :heart:
