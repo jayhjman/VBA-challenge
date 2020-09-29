@@ -18,22 +18,21 @@ This is an example of how to cycle through each worksheet in an Excel file using
 
   * [Visual Basic Module](processStocks.bas) - Visual Basic code exported from the [Final Stock Data](Multiple_year_stock_data-final.xlsm) for review
   
-* Source Screenshots of Results from [Final Stock Data](Multiple_year_stock_data-final.xlsm)
-
-  * [Result-2014](screenshots/Result-2014.png) 
-  * [Result-2015](screenshots/Result-2015.png)
-  * [Result-2016](screenshots/Result-2016.png)
   
   
-##   Results
+##   Results using [Final Stock Data](Multiple_year_stock_data-final.xlsm)
 
 * 2014
+
 ![Result 2014](screenshots/Result-2014.png)
 
 * 2015
 
+![Result 2015](screenshots/Result-2015.png)
 
 * 2016
+
+![Result 2015](screenshots/Result-2015.png)
   
   
   
